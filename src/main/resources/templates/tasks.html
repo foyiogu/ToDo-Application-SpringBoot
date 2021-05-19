@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="index.css">
+    <title>Tasks</title>
+</head>
+<body>
+<h1 style="display: flex; justify-content: center;">Welcome to <span style="color: brown;"> What To Do</span></h1>
+<header class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03"
+            aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- <p>Name</p> -->
+    <h4 class="navbar-brand" th:if="${session.containsKey('user_session')}" th:text="${session.user_session.getFirstName()}"></h4>
+
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+
+                <!-- FORM START -->
+                <form class="form-inline my-2 my-lg-0">
+                    <h6 class="nav-link">Add New Task: </h6>
+                    <input class="form-control mr-sm-2" type="textarea" placeholder="Task Name" aria-label="Search">
+                    <input class="form-control mr-sm-2" type="textarea" placeholder="Description" aria-label="Search">
+                    <input class="form-control mr-sm-2" type="textarea" placeholder="Start Time" aria-label="Search">
+                    <!-- <input class="form-control mr-sm-2" type="textarea" placeholder="Completion Time" aria-label="Search"> -->
+
+                    <p class="nav-link"> Completion Time :</p>
+                    <select id="messageType" data-th-field="*{messageType}">
+                        <option value="30">30 Minutes</option>
+                        <option value="60">60 Minutes</option>
+                        <option value="90">90 Minutes</option>
+                        <option value="120" >120 Minutes</option>
+                    </select>
+
+                    <br>
+                    <div>
+                        <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Add</button>
+                    </div>
+                </form>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="post">
+            <!-- FORM END -->
+            <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
+            <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Log Out</button>
+        </form>
+    </div>
+</header>
+
+<!-- list of cards -->
+<div class="blog-list-grid" >
+
+    <div class="blog-card alt" >
+        <div class="description">
+            <h1 class="trending-title">Task Name</h1>
+            <!-- <h2 class="written-by">By Jaime Lannister</h2> -->
+            <div class="clicks">
+                <table border="3" cellpadding="20">
+                    <thead>
+                    <tr>
+                        <th >Description</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="product : ${listProducts}">
+                        <!-- <td th:text="${product.id}"></td> -->
+                        <td th:text="${product.name}">Name</td>
+                        <td th:text="${product.brand}">Brand</td>
+                        <td th:text="${product.madein}">Made in</td>
+
+                        <!--<td th:text="${product.price}">Price</td> -->
+                        <!-- <td>
+                          <a th:href="@{'/edit/' + ${product.id}}">Edit</a>
+                          &nbsp;&nbsp;&nbsp;
+                          <a th:href="@{'/delete/' + ${product.id}}">Delete</a>
+                        </td> -->
+                    </tr>
+                    </tbody>
+                </table>
+                <div style="display: flex; align-items: stretch;">
+
+                    <div>
+                        <button class="read-more">Edit</button>
+                    </div>
+
+                    <div>
+                        <button class="read-more">Done</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</div>
+</body>
+</html>

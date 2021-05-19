@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Sign In Form</title>
+
+  <!-- Font Icon -->
+  <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
+
+  <!-- Main css -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="main">
+
+  <!-- Sing in  Form -->
+
+  <section class="sign-in">
+    <div class="container">
+        <h2 class="form-title" style="display: flex; justify-content: center;">What To Do?</h2>
+        <div class="signin-content">
+            <div class="signin-image">
+          <figure><img src="images/signin-image.jpg" alt="sing up image"></figure>
+          <a th:href ="@{/signup}" class="signup-image-link">Create an account</a>
+        </div>
+
+        <div class="signin-form">
+          <div>
+            <p th:if="${not_found}" th:text="${not_found}" class="text-danger"> Invalid user placeholder</p>
+          </div>
+          <h2 class="form-title">Sign In</h2>
+          <form th:action= "@{/login}" th:object="${user}" method="POST" class="register-form">
+
+              <!--              email-->
+              <div class="form-group">
+              <label ><i class="zmdi zmdi-email"></i></label>
+              <input th:field = "*{email}" type="email" placeholder="Your Email"/>
+            </div>
+
+<!--            password-->
+            <div class="form-group">
+              <label ><i class="zmdi zmdi-lock"></i></label>
+              <input th:field = "*{password}" type="password"  placeholder="Password"/>
+            </div>
+
+            <div class="form-group form-button">
+<!--              <button type="submit" name="signin" id="signin" class="form-submit" value="Log in">Log in</button>-->
+              <input type="submit" name="signin" id="signin" class="form-submit" value="Log in"/>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- JS-->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
