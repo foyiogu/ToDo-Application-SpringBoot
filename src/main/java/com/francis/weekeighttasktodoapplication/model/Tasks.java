@@ -40,4 +40,5 @@ public class Tasks {
     @JoinColumn(name = "category_task")
     private Category category;
 
+
 }

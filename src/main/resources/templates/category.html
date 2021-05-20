@@ -69,7 +69,7 @@
     <title>Category</title>
 </head>
 <body>
-<h1 style="display: flex; justify-content: center;">Welcome to  <span style="color: brown;">  What To Do</span></h1>
+<h1 style="display: flex; justify-content: center;">Welcome to  <span style="color: brown;">  WhatToDo</span></h1>
 <header class="navbar navbar-expand-lg navbar-dark bg-primary">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -107,8 +107,13 @@
                 <div class="card-details">
                     <h2 class="blog-title" th:text="${category.categoryName}">fff</h2>
                     <span>
-                    <button class="card-button">Tasks</button>
-                    <button class="card-button">Delete</button>
+
+                        <a th:href="@{|/task/${category.getId()}|}" class="card-button">Tasks</a>
+<!--                        <a th:href="@{/task/{id}${category.getId()}|}" class="card-button">Tasks</a>-->
+
+
+                        <a class="card-button" th:href="@{/delete/{id}/{userID}(id = ${category.id}, userID= ${user.id})}" >Delete</a>
+
                     </span>
                 </div>
             </div>

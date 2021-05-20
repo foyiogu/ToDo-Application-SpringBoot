@@ -28,13 +28,13 @@ public class RegistrationController {
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute("user") Users user, HttpServletRequest request, RedirectAttributes redirectAttributes){
+    public String login(@ModelAttribute("user") Users user, HttpServletRequest request, Model model){
 
         //For Validation of new user
         Users validUser = userService.getUser(user.getEmail(),user.getPassword());
 
         if (validUser == null) {
-            redirectAttributes.addFlashAttribute("not_found", "Email or password not valid, please check again or sign up");
+            model.addAttribute("not_found", "Email or password not valid, please check again or sign up");
             return "index";
         }else{
             request.getSession().invalidate();
@@ -53,12 +53,18 @@ public class RegistrationController {
     }
 
     @PostMapping("/signupPost")
-    public String reg(@ModelAttribute("user") @Valid Users user, BindingResult bindingResult){
+    public String reg(@ModelAttribute("user") @Valid Users user, Model model, BindingResult bindingResult, String email, String password){
+        Users existingUser = userService.getUser(email,password);
+        if (existingUser != null){
+            model.addAttribute("existingUser", "user already exists");
+            return "signup";
+        }
+
         if (bindingResult.hasErrors()){
             return "signup";
         }
-        userService.registerNewUser(user);
-        return "index";
+            userService.registerNewUser(user);
+            return "index";
     }
 
     //FOR LOG OUT

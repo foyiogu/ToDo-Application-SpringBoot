@@ -16,8 +16,6 @@ public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    @Autowired
-    private UserService userService;
 
     @Autowired
     private UserRepository userRepository;
@@ -35,5 +33,14 @@ public class CategoryService {
         userRepository.save(userOptional.get());
     }
 
+    public void deleteCategory(Long categoryId, Long userId){
+        Users user = userRepository.getUsersById(userId);
+        Category category = categoryRepository.getCategoryById(categoryId);
+        user.getCategories().remove(category);
+        categoryRepository.deleteById(categoryId);
+    }
 
+    public Category getCategoryById(Long id){
+        return this.categoryRepository.getCategoryById(id);
+    }
 }

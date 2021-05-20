@@ -1,6 +1,7 @@
 package com.francis.weekeighttasktodoapplication.repository;
 
 import com.francis.weekeighttasktodoapplication.model.Category;
+import com.francis.weekeighttasktodoapplication.model.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,5 +11,4 @@ import java.util.List;
 public interface CategoryRepository extends JpaRepository<Category, Long> {
     List<Category> findAllByUserId(Long id);
     Category getCategoryById(Long categoryId);
-
 }

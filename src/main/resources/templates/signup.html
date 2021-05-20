@@ -21,9 +21,11 @@
   <!-- Sign up form -->
   <section class="signup">
     <div class="container">
+        <h2 class="form-title" style="display: flex; justify-content: center;">WhatToDo?</h2>
       <div class="signup-content">
         <div class="signup-form">
           <h2 class="form-title">Sign up</h2>
+            <p style="color: red" th:if="${existingUser}" th:text="${existingUser}"></p>
           <form th:object="${user}" th:action="@{/signupPost}" method="POST" class="register-form" >
 
 <!--            first name-->

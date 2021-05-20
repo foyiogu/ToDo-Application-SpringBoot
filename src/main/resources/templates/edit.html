@@ -5,15 +5,71 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link
-            rel="stylesheet"
-            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-    />
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
+
+    <style>
+        .trending {
+            padding-left: 9%;
+            padding-right: 9%;
+            margin-top: 7%;
+        }
+        .trending-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+        .trending .card-img {
+            width: 100%;
+            border-radius: 12px;
+            height: 214px;
+            object-fit: cover;
+        }
+        .trending .card-container {
+            max-width: 280px;
+            margin: 0 auto;
+        }
+        .trending .card {
+            padding: 8px;
+            border-radius: 12px;
+            border: 1px solid #bacdd8;
+            margin-bottom: 20px;
+        }
+        .trending .description {
+            font-size: 14px;
+            color: #7f8c98;
+            line-height: 150%;
+        }
+        .trending .card-button {
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            color: #0077ff;
+            background-color: #e0efff;
+            margin: 0 auto;
+            display: block;
+            transition: all 200ms ease-in-out;
+            cursor: pointer;
+        }
+        .card-button:focus,
+        .card-button:hover {
+            background-color: #6c63ff;
+            color: #fff;
+        }
+        .trending .card-details {
+            padding: 16px 8px 8px 8px;
+        }
+        @media screen and (max-width: 480px) {
+            .trending-container {
+                grid-template-columns: 1fr;
+                grid-gap: 20px;
+            }
+        }
+
+    </style>
     <title>Tasks</title>
 </head>
 <body>
-<h1 style="display: flex; justify-content: center;">Welcome to <span style="color: brown;"> What To Do</span></h1>
+<h1 style="display: flex; justify-content: center;">Welcome to <span style="color: brown;"> WhatToDo</span></h1>
 <header class="navbar navbar-expand-lg navbar-dark bg-primary">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03"
             aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,15 +84,13 @@
             <li class="nav-item active">
 
                 <!-- FORM START -->
-                <form class="form-inline my-2 my-lg-0">
+                <form class="form-inline my-2 my-lg-0" th:object="${newTask}" th:action="@{/update_task}" method="post" >
                     <h6 class="nav-link">Add New Task: </h6>
-                    <input class="form-control mr-sm-2" type="textarea" placeholder="Task Name" aria-label="Search">
-                    <input class="form-control mr-sm-2" type="textarea" placeholder="Description" aria-label="Search">
-                    <input class="form-control mr-sm-2" type="textarea" placeholder="Start Time" aria-label="Search">
-                    <!-- <input class="form-control mr-sm-2" type="textarea" placeholder="Completion Time" aria-label="Search"> -->
+                    <input th:field="*{id}" type="hidden">
+                    <input th:field="*{description}" class="form-control mr-sm-2" type="text" placeholder="Description" aria-label="Search">
 
                     <p class="nav-link"> Completion Time :</p>
-                    <select id="messageType" data-th-field="*{messageType}">
+                    <select id="messageType"  th:field="*{duration}">
                         <option value="30">30 Minutes</option>
                         <option value="60">60 Minutes</option>
                         <option value="90">90 Minutes</option>
@@ -52,7 +106,6 @@
         </ul>
         <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="post">
             <!-- FORM END -->
-            <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
             <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Log Out</button>
         </form>
     </div>
