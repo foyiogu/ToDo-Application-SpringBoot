@@ -108,9 +108,6 @@
                     <span>
 
                         <a th:href="@{|/task/${category.getId()}|}" class="card-button">Tasks</a>
-<!--                        <a th:href="@{/task/{id}${category.getId()}|}" class="card-button">Tasks</a>-->
-
-
                         <a class="card-button" th:href="@{/delete/{id}/{userID}(id = ${category.id}, userID= ${user.id})}" >Delete</a>
 
                     </span>
