@@ -217,6 +217,7 @@
                             <th>Description</th>
                             <th>Start Time</th>
                             <th>End Time</th>
+<!--                            <th>Message</th>-->
 
                         </tr>
                         </thead>
@@ -224,6 +225,7 @@
                         <td th:text="${task.description}">Description</td>
                         <td th:text="${task.startTime}">StartTime</td>
                         <td th:text="${task.endTime}">EndTime</td>
+<!--                        <td th:text="${task.reminder.getMessage()}">rmind</td>-->
                         </tbody>
                     </table>
                     <div style="display: flex; align-items: stretch;">

@@ -29,6 +29,9 @@ public class Tasks {
     @Column(name = "end_time")
     private LocalTime endTime = startTime.plusMinutes(getDuration());
 
+//    @OneToOne
+//    private Reminder reminder;
+
     @ManyToOne
     private Users user;
 

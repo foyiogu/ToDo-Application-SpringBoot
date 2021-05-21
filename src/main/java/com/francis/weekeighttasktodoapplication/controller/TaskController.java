@@ -4,6 +4,7 @@ import com.francis.weekeighttasktodoapplication.model.Category;
 import com.francis.weekeighttasktodoapplication.model.Tasks;
 import com.francis.weekeighttasktodoapplication.model.Users;
 import com.francis.weekeighttasktodoapplication.service.CategoryService;
+//import com.francis.weekeighttasktodoapplication.service.ReminderService;
 import com.francis.weekeighttasktodoapplication.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,11 +19,14 @@ public class TaskController {
 
     private final TaskService taskService;
     private final CategoryService categoryService;
+//    private final ReminderService reminderService;
+
 
     @Autowired
-    public TaskController(TaskService taskService, CategoryService categoryService) {
+    public TaskController(TaskService taskService, CategoryService categoryService ) {
         this.taskService = taskService;
         this.categoryService = categoryService;
+//        this.reminderService = reminderService;
     }
 
     @GetMapping("/task/{categoryId}")
@@ -48,6 +52,7 @@ public class TaskController {
         task.setEndTime(LocalTime.now().plusMinutes(task.getDuration()));
         task.setUser(validUser);
         task.setCategory(category);
+//        reminderService.giveReminder();
         taskService.saveNewTask(task, category.getId());
         return "redirect:/task/" + category.getId();
     }
@@ -62,13 +67,12 @@ public class TaskController {
     @PostMapping("/update_task")
     public String editTask(@ModelAttribute("newTask") Tasks editedTask) {
         taskService.updateTask(editedTask.getId(),editedTask);
-//        Category category = editedTask.getCategory();
         Category category1 = taskService.getTask(editedTask.getId()).getCategory();
         return "redirect:/task/" + category1.getId();
 
     }
 
-    @PostMapping("/deleteTask/{id}/{categoryID}") //CHANGED THE STATE BY REMOVING A FILE
+    @GetMapping("/deleteTask/{id}/{categoryID}") //CHANGED THE STATE BY REMOVING A FILE
     public String delete(@PathVariable(name = "id")Long id, @PathVariable(name = "categoryID")Long categoryId){
         Category category = categoryService.getCategoryById(categoryId);
         Tasks task = taskService.getTask(id);
