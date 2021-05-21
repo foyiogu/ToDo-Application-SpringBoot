@@ -6,7 +6,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static javax.persistence.GenerationType.IDENTITY;
@@ -49,7 +48,4 @@ public class Users {
     @OneToMany
     private List<Category> categories = new ArrayList<>();
 
-    public String getFullName() {
-        return this.getFirstName() + " " + this.getLastName();
-    }
 }

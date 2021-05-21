@@ -10,8 +10,12 @@ import java.util.Optional;
 
 @Service
 public class UserService implements iUserService {
+    private final UserRepository userRepository;
+
     @Autowired
-    private UserRepository userRepository;
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public void registerNewUser(Users user) {
@@ -24,12 +28,13 @@ public class UserService implements iUserService {
 
     @Override
     public Users getUser(String email, String password) {
-        Users user = this.userRepository.findUserByEmailAndPassword(email, password);
-        return user;
+        return this.userRepository.findUserByEmailAndPassword(email, password);
     }
 
+    @Override
     public Users getUserById(Long id){
         Optional<Users> users = userRepository.findById(id);
+        //noinspection OptionalGetWithoutIsPresent
         return users.get();
     }
 }

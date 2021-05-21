@@ -2,10 +2,9 @@ package com.francis.weekeighttasktodoapplication.service;
 
 import com.francis.weekeighttasktodoapplication.model.Category;
 import com.francis.weekeighttasktodoapplication.model.Tasks;
-import com.francis.weekeighttasktodoapplication.model.Users;
 import com.francis.weekeighttasktodoapplication.repository.CategoryRepository;
 import com.francis.weekeighttasktodoapplication.repository.TaskRepository;
-import com.francis.weekeighttasktodoapplication.repository.UserRepository;
+import com.francis.weekeighttasktodoapplication.service.contracts.iTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,42 +15,47 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-public class TaskService {
+public class TaskService implements iTaskService {
+
+    private final CategoryRepository categoryRepository;
+    private final TaskRepository taskRepository;
 
     @Autowired
-    private CategoryRepository categoryRepository;
+    public TaskService(CategoryRepository categoryRepository, TaskRepository taskRepository) {
+        this.categoryRepository = categoryRepository;
+        this.taskRepository = taskRepository;
+    }
 
-    @Autowired
-    private TaskRepository taskRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-
+    @Override
     public List<Tasks> findAllByCategory(Long id){
         return taskRepository.findAllByCategoryId(id);
     }
 
+    @Override
     public void saveNewTask(Tasks task, Long categoryId){
         Tasks tasksDB = taskRepository.save(task);
         Optional<Category> categoryOptional = categoryRepository.findById(categoryId);
-        List<Tasks> tasks = categoryOptional.get().getTasks();
-        tasks.add(tasksDB);
-        categoryOptional.get().setTasks(tasks);
-        categoryRepository.save(categoryOptional.get());
+        if (categoryOptional.isPresent()){
+            List<Tasks> tasks = categoryOptional.get().getTasks();
+            tasks.add(tasksDB);
+            categoryOptional.get().setTasks(tasks);
+            categoryRepository.save(categoryOptional.get());
+        }
     }
 
-
+    @Override
     public void delete(Tasks tasks, Long categoryId){
         Category category = categoryRepository.getCategoryById(categoryId);
         category.getTasks().remove(tasks);
         taskRepository.delete(tasks);
     }
 
+    @Override
     public Tasks getTask(Long id){
         return taskRepository.getTasksById(id);
     }
 
+    @Override
     @Transactional
     public void updateTask(Long taskId, Tasks task) {
         Tasks taskDB = this.taskRepository.findById(taskId).orElseThrow(()->new IllegalStateException("does not exist"));

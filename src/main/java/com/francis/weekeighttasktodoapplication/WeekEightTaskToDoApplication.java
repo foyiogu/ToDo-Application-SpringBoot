@@ -1,8 +1,7 @@
 package com.francis.weekeighttasktodoapplication;
 
-/**Created by Francis Oyiogu
- * May 20, 2021
- *
+/*Created by Francis Oyiogu
+  May 20, 2021
  */
 
 import org.springframework.boot.SpringApplication;
